@@ -39,6 +39,11 @@ public class Reto1 {
             switch (opcionMenu) {
                 case 1:
                   
+                    if (!planetaDestinoUsuario.isEmpty()) {
+                        System.out.println("\nHas seleccionado un planeta destino. Si eliges otro, el actual(" + planetaDestinoUsuario + ") será reemplazado.");
+                    }
+
+                    planetaDestinoUsuario = obtenerPlanetaDestinoUsuario(scanner, planetasDestino);
                     break;
 
                 case 2:
@@ -72,6 +77,34 @@ public class Reto1 {
         System.out.println(" 3. Iniciar una simulación espacial");
         System.out.println(" 4. Salir del programa");
         System.out.println("\nDigite una opción (1-4):");
+    }
+
+    public static String obtenerPlanetaDestinoUsuario(Scanner scanner, Map<String, String[]> planetasDestino) {
+        int index = 1;
+        
+        // Mostramos la lista de planetas
+        System.out.println("\n------------  PLANETAS  ------------");
+        for (String planeta : planetasDestino.keySet()) {
+            System.out.println(index + ". " + planeta);
+            index++;
+        }
+
+        System.out.println("\nSeleccione un planeta:");
+        int planetaSeleccionado = scanner.nextInt();
+
+        // Si el usuario selecciona un planeta qeu no es valido le mostramos un mensaje y se le da la opción de elegir nuevamente
+        while (planetaSeleccionado < 1 || planetaSeleccionado > planetasDestino.size()) {
+            System.out.println("\nOpción no válida, elija un destino válido (1 a " + planetasDestino.size() + "): ");
+            planetaSeleccionado = scanner.nextInt();
+        }
+
+        // Mostramos al usuario el planeta seleccionado, descripción y la distancia
+        String planeta = (String) planetasDestino.keySet().toArray()[planetaSeleccionado - 1];
+        System.out.println("\nHas seleccionado: " + planeta);
+        System.out.println("Descripción: " + planetasDestino.get(planeta)[0]);
+        System.out.println("Distancia desde la Tierra: " + planetasDestino.get(planeta)[1] + " millones de Km");
+
+        return planeta;
     }
 
 }
