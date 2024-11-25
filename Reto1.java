@@ -48,7 +48,13 @@ public class Reto1 {
 
                 case 2:
 
-                  break;
+                    if (planetaDestinoUsuario.isEmpty()) {
+                        System.out.println("\nNo has seleccionado el planeta destino. Selecciona uno: ");
+                        planetaDestinoUsuario = obtenerPlanetaDestinoUsuario(scanner, planetasDestino);  
+                    } else {
+                        naveEspacialUsuario = obtenerNaveEspacialUsuario(scanner, navesEspaciales);    
+                    }
+                    break;
 
                 case 3:
 
@@ -105,6 +111,38 @@ public class Reto1 {
         System.out.println("Distancia desde la Tierra: " + planetasDestino.get(planeta)[1] + " millones de Km");
 
         return planeta;
+    }
+
+    public static String obtenerNaveEspacialUsuario(Scanner scanner, Map<String, String[]> navesEspaciales) {
+        int index = 1;
+
+        // Mostramos la lista de naves espaciales con su velocidad y cantidad de pasajeros
+        System.out.println("\n------------  NAVES ESPACIALES  ------------");
+        for (String nave : navesEspaciales.keySet()) {
+            String[] infoNave = navesEspaciales.get(nave);
+            System.out.println(index + ". " + nave + " - Velocidad: " + infoNave[0] + " km/h, Pasajeros: " + infoNave[1] + "-" + " Combustible: " + infoNave[2] + " - Oxigeno: " + infoNave[3]);
+            index++;
+        }
+
+        System.out.println("\nSeleccione una nave espacial:");
+        int naveSeleccionada = scanner.nextInt();
+
+        // Si el ususario digita una opción no valida de nave espacial, se le indica y se da la opción para que vuelva a escribir
+        while (naveSeleccionada < 1 || naveSeleccionada > navesEspaciales.size()) {
+            System.out.println("\nOpción no válida, elija una nave válida (1 a " + navesEspaciales.size() + "): ");
+            naveSeleccionada = scanner.nextInt();
+        }
+
+        String nave = (String) navesEspaciales.keySet().toArray()[naveSeleccionada - 1];
+        String[] infoNave = navesEspaciales.get(nave);
+
+        // Se muestra la info de la nave seleccionada
+        System.out.println("\nHas seleccionado: " + nave);
+        System.out.println("Velocidad máxima: " + infoNave[0] + " km/h");
+        System.out.println("Capacidad de pasajeros: " + infoNave[1]);
+        System.out.println("Combustible disponible: " + infoNave[2]);
+        System.out.println("Oxigeno disponible: " + infoNave[3]);
+        return nave;
     }
 
 }
